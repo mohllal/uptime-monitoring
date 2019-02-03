@@ -1,9 +1,7 @@
 var http = require('http');
 var url = require('url');
 var StringDecoder = require('string_decoder').StringDecoder;
-
-var hostname = '127.0.0.1';
-var port = 3000;
+var config = require('./config');
 
 var server = http.createServer(function (req, res) {
     // get the request url path
@@ -86,6 +84,6 @@ var routes = {
 };
 
 // start the server
-server.listen(port, hostname, function () {
-    console.log("Server running at http://" + hostname + ":" + port + "/");
+server.listen(config.port, config.hostname, function () {
+    console.log("Server running at http://" + config.hostname + ":" + config.port + "/ in " + config.name + " mode");
 });
