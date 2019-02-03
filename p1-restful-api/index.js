@@ -1,9 +1,26 @@
 var http = require('http');
+var https = require('https');
 var url = require('url');
 var StringDecoder = require('string_decoder').StringDecoder;
+var fs = require('fs');
 var config = require('./config');
 
-var server = http.createServer(function (req, res) {
+var httpServer = http.createServer(function (req, res) {
+    unifiedServer(req, res);
+});
+
+// https options
+var httpsServerOptions = {
+    'key': fs.readFileSync('./https/key.pem'),
+    'cert': fs.readFileSync('./https/cert.pem')
+};
+
+var httpsServer = https.createServer(httpsServerOptions, function (req, res) {
+    unifiedServer(req, res);
+});
+
+// all the server logic goes here
+var unifiedServer = function (req, res) {
     // get the request url path
     var parsedUrl = url.parse(req.url, true);
     var path = parsedUrl.pathname;
@@ -21,7 +38,7 @@ var server = http.createServer(function (req, res) {
     // get the request payload
     var decoder = new StringDecoder('utf-8');
     var payload = '';
-    
+
     req.on("data", function (data) {
         payload += decoder.write(data);
     });
@@ -67,7 +84,7 @@ var server = http.createServer(function (req, res) {
         console.log("Request received with these headers: ", headersObject);
         console.log("Request received with this payload: ", payload);
     });
-});
+};
 
 //define request handlers
 var handlers = {};
@@ -83,7 +100,12 @@ var routes = {
     'sampleUrl': handlers.sampleUrl
 };
 
-// start the server
-server.listen(config.port, config.hostname, function () {
-    console.log("Server running at http://" + config.hostname + ":" + config.port + "/ in " + config.name + " mode");
+// start the http server
+httpServer.listen(config.httpPort, config.hostname, function () {
+    console.log("HTTP server running at http://" + config.hostname + ":" + config.httpPort + "/ in " + config.name + " mode");
+});
+
+// start the https server
+httpsServer.listen(config.httpsPort, config.hostname, function () {
+    console.log("HTTPS server running at https://" + config.hostname + ":" + config.httpsPort + "/ in " + config.name + " mode");
 });
