@@ -88,8 +88,8 @@ var unifiedServer = function (req, res) {
 
 //define request handlers
 var handlers = {};
-handlers.sampleUrl = function (data, callback) {
-    callback(200, {'name': 'sampleUrl handler'});
+handlers.ping = function (data, callback) {
+    callback(200);
 };
 handlers.notFound = function (data, callback) {
     callback(404);
@@ -97,7 +97,7 @@ handlers.notFound = function (data, callback) {
 
 // define request routes
 var routes = {
-    'sampleUrl': handlers.sampleUrl
+    'ping': handlers.ping
 };
 
 // start the http server
