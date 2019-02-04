@@ -5,7 +5,8 @@ environments.development = {
     'httpPort': 3000,
     'httpsPort': 3001,
     'hostname': 'localhost',
-    'name': 'development' 
+    'name': 'development',
+    'secretKey': 'secret' 
 };
 
 // production environment
@@ -13,7 +14,8 @@ environments.production = {
     'httpPort': 5000,
     'httpsPort': 5001,
     'hostname': '####',
-    'name': 'production'
+    'name': 'production',
+    'secretKey': '####'
 };
 
 // get environment name passed as command-line argument

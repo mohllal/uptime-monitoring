@@ -4,6 +4,8 @@ var url = require('url');
 var StringDecoder = require('string_decoder').StringDecoder;
 var fs = require('fs');
 var config = require('./config');
+var handlers = require('./handlers/main');
+var helpers = require('./lib/helpers');
 
 var httpServer = http.createServer(function (req, res) {
     unifiedServer(req, res);
@@ -48,6 +50,9 @@ var unifiedServer = function (req, res) {
 
         // choose the request handler based on path
         var chosenHandler = typeof(routes[trimmedPath]) !== 'undefined' ? routes[trimmedPath] : handlers.notFound;
+        
+        // parse payload to object
+        var parsedPayload = helpers.parseJsonToObject(payload);
 
         // construct the data object
         var data = {
@@ -55,7 +60,7 @@ var unifiedServer = function (req, res) {
             'method': method,
             'queryStringObject': queryStringObject,
             'headersObject': headersObject,
-            'payload': payload
+            'payload': parsedPayload
         };
         
         // route the request to the handler
@@ -86,18 +91,10 @@ var unifiedServer = function (req, res) {
     });
 };
 
-//define request handlers
-var handlers = {};
-handlers.ping = function (data, callback) {
-    callback(200);
-};
-handlers.notFound = function (data, callback) {
-    callback(404);
-};
-
 // define request routes
 var routes = {
-    'ping': handlers.ping
+    'ping': handlers.ping,
+    'users': handlers.users
 };
 
 // start the http server
