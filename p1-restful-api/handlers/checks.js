@@ -245,7 +245,33 @@ checksHandler.DELETE = function (data, callback) {
                         if (isValid) {
                             _data.delete('checks', id, function (err) {
                                 if (!err) {
-                                    callback(200);
+                                    // lookup the user who owns the check
+                                    _data.read('users', phone, function (err, userData) {
+                                        if (!err && userData) {
+                                            var indexOfCheck = userData.checks.indexOf(checkData.id);
+
+                                            // check if the check is found in the user check array
+                                            if (indexOfCheck > -1) {
+                                                userData.checks.splice(indexOfCheck, 1);
+
+                                                // update the user object
+                                                _data.update('users', phone, userData, function (err) {
+                                                    if (!err) {
+                                                        callback(200);
+                                                    }
+                                                    else {
+                                                        callback(500, {'Error': 'Could not update the user'});
+                                                    }
+                                                });
+                                            }
+                                            else {
+                                                callback(400, {'Error': 'Could not find the check in the user object'})
+                                            }
+                                        }
+                                        else {
+                                            callback(500, {'Error': 'Could not find the user who creates the check'});
+                                        }
+                                    });
                                 }
                                 else {
                                     callback(500, {'Error': 'Could not delete the check'});
