@@ -145,5 +145,24 @@ authHandler.DELETE = function (data, callback) {
     }
 };
 
+// verify if a given token id is valid for a given user
+authHandler.verifyToken = function (id, phone, callback) {
+    // lookup the token
+    _data.read('tokens', id, function (err, data) {
+        if (!err & data) {
+            // check that the token is for a given user and has not expired
+            if (data.phone == phone && data.expires > Date.now()) {
+                callback(true);
+            }
+            else {
+                callback(false);
+            }
+        }
+        else {
+            callback(false);
+        }
+    })
+};
+
 // export the module
 module.exports = authHandler;
