@@ -24,5 +24,18 @@ helpers.parseJsonToObject = function (str) {
     }
 };
 
+// create a string of random alphanumeric characters with a given length
+helpers.createRandomString = function (length) {
+    length = typeof(length) == 'number' && length > 0? length : false;
+
+    if (length) {
+        var buf = crypto.randomBytes(length);
+        return buf.toString('hex');
+    }
+    else {
+        return false;
+    }
+};
+
 // export the module
 module.exports = helpers;

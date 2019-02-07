@@ -94,7 +94,8 @@ var unifiedServer = function (req, res) {
 // define request routes
 var routes = {
     'ping': handlers.ping,
-    'users': handlers.users
+    'users': handlers.users,
+    'auth': handlers.auth
 };
 
 // start the http server
