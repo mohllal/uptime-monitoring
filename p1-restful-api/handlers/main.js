@@ -1,5 +1,6 @@
 var usersHandler = require('./users');
 var authHandler = require('./auth');
+var checksHandler = require('./checks');
 
 //define request handlers
 var handlers = {};
@@ -20,6 +21,17 @@ handlers.auth = function (data, callback) {
     var acceptableMethods = ['GET', 'POST', 'PUT', 'DELETE'];
     if (acceptableMethods.indexOf(data.method) > -1) {
         authHandler[data.method](data, callback);
+    }
+    else {
+        callback(405);
+    }
+};
+
+// checks handler
+handlers.checks = function (data, callback) {
+    var acceptableMethods = ['GET', 'POST', 'PUT', 'DELETE'];
+    if (acceptableMethods.indexOf(data.method) > -1) {
+        checksHandler[data.method](data, callback);
     }
     else {
         callback(405);
