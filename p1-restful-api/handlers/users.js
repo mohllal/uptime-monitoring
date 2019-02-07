@@ -17,8 +17,8 @@ usersHandler.GET = function (data, callback) {
         
         if (token) {
             // verify that the given token is valid for a given phone
-            authHandler.verifyToken(token, phone, function (err) {
-                if (!err) {
+            authHandler.verifyToken(token, phone, function (isValid) {
+                if (isValid) {
                     // read the user data
                     _data.read('users', phone, function (err, data) {
                         if (!err && data) {
@@ -113,8 +113,8 @@ usersHandler.PUT = function (data, callback) {
 
         if (token) {
             // verify that the given token is valid for a given phone
-            authHandler.verifyToken(token, phone, function (err) {
-                if (!err) {
+            authHandler.verifyToken(token, phone, function (isValid) {
+                if (isValid) {
                     // check the optional fields
                     if (firstName || lastName || password) {
                         // check if the user already exists
@@ -172,8 +172,8 @@ usersHandler.DELETE = function (data, callback) {
 
         if (token) {
             // verify that the given token is valid for a given phone
-            authHandler.verifyToken(token, phone, function (err) {
-                if (!err) {
+            authHandler.verifyToken(token, phone, function (isValid) {
+                if (isValid) {
                     _data.delete('users', phone, function (err) {
                         if (!err) {
                             callback(200);

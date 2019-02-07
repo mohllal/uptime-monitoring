@@ -178,8 +178,8 @@ checksHandler.PUT = function (data, callback) {
                     var token = typeof(data.headersObject.token) == 'string'? data.headersObject.token : false;
                     
                     // verify that the given token is valid and belongs to the user who created the check
-                    authHandler.verifyToken(token, phone, function (err) {
-                        if(!err){
+                    authHandler.verifyToken(token, phone, function (isValid) {
+                        if(isValid){
                             // update check data where necessary
                             if (protocol) {
                                 checkData.protocol = protocol;
@@ -241,8 +241,8 @@ checksHandler.DELETE = function (data, callback) {
                 var token = typeof(data.headersObject.token) == 'string'? data.headersObject.token : false;
                 if (token) {
                     // verify that the given token is valid for a given phone
-                    authHandler.verifyToken(token, phone, function (err) {
-                        if (!err) {
+                    authHandler.verifyToken(token, phone, function (isValid) {
+                        if (isValid) {
                             _data.delete('checks', id, function (err) {
                                 if (!err) {
                                     callback(200);
