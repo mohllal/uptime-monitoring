@@ -158,7 +158,6 @@ usersHandler.PUT = function (data, callback) {
     }
 };
 
-// TODO: clean up (delete) any other data files associated with this user
 // users - DELETE
 // required data: phone
 // optional data: none
@@ -174,17 +173,55 @@ usersHandler.DELETE = function (data, callback) {
             // verify that the given token is valid for a given phone
             authHandler.verifyToken(token, phone, function (isValid) {
                 if (isValid) {
-                    _data.delete('users', phone, function (err) {
-                        if (!err) {
-                            callback(200);
-                        }
+                    // lookup the user
+                    _data.read('users', phone, function (err, userData) {
+                        if (!err && userData) {
+                            // delete the user's data
+                            _data.delete('users', phone, function (err) {
+                                if (!err) {
+                                    // delete each of the checks associated with the user
+                                    var userChecks = typeof (userData.checks) == 'object' && userData.checks instanceof Array ? userData.checks : [];
+                                    var checksToDelete = userChecks.length;
+                                    
+                                    if (checksToDelete > 0) {
+                                        var checksDeleted = 0;
+                                        var deletionErrors = false;
+                                        
+                                        // loop through the checks
+                                        userChecks.forEach(function (checkId) {
+                                            // delete the check
+                                            _data.delete('checks', checkId, function (err) {
+                                                if (err) {
+                                                    deletionErrors = true;
+                                                }
+                                                checksDeleted++;
+                                                if (checksDeleted == checksToDelete) {
+                                                    if (!deletionErrors) {
+                                                        callback(200);
+                                                    } 
+                                                    else {
+                                                        callback(500, {'Error': "Errors encountered while attempting to delete all of the user's checks. All checks may not have been deleted from the system successfully"});
+                                                    }
+                                                }
+                                            });
+                                        });
+                                    } 
+                                    else {
+                                        callback(200);
+                                    }
+                                } 
+                                else {
+                                    callback(500, {'Error': 'Could not delete the specified user'});
+                                }
+                            });
+                        } 
                         else {
-                            callback(500, {'Error': 'Could not delete the user'});
+                            callback(400, {'Error': 'Could not find the specified user'});
                         }
                     });
-                }
+                } 
                 else {
-                    callback(403, {'Error': 'Invalid token'});
+                    callback(403, {"Error": "Missing required token in header, or token is invalid"});
                 }
             });
         }
