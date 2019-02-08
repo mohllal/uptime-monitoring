@@ -2,12 +2,12 @@ var environments = {};
 
 // development (default) environment
 environments.development = {
-    'httpPort': 3000,
-    'httpsPort': 3001,
+    'httpPort': process.env.HTTP_PORT || 3000,
+    'httpsPort': process.env.HTTPS_PORT || 3001,
     'hostname': 'localhost',
     'name': 'development',
-    'secretKey': 'secret',
-    'maxChecks': 5,
+    'secretKey': process.env.SECRET_KEY || 'secret',
+    'maxChecks': process.env.MAXIMUM_CHECKS || 5,
     'twilio' : {
         'accountSid': process.env.TWILIO_ACCOUNT_SID || 'AC1f067851db3a2acd71c4a16d3dfedd5d',
         'authToken': process.env.TWILIO_AUTH_TOKEN || 'b7442ceb53329cec5b52a2d87aef4a1f',
@@ -17,12 +17,12 @@ environments.development = {
 
 // production environment
 environments.production = {
-    'httpPort': 5000,
-    'httpsPort': 5001,
-    'hostname': '####',
+    'httpPort': process.env.HTTP_PORT,
+    'httpsPort': process.env.HTTPS_PORT,
+    'hostname': process.env.HOST_NAME,
     'name': 'production',
-    'secretKey': '####',
-    'maxChecks': 10,
+    'secretKey': process.env.SECRET_KEY,
+    'maxChecks': process.env.MAXIMUM_CHECKS,
     'twilio': {
         'accountSid': process.env.TWILIO_ACCOUNT_SID,
         'authToken': process.env.TWILIO_AUTH_TOKEN,
