@@ -7,7 +7,12 @@ environments.development = {
     'hostname': 'localhost',
     'name': 'development',
     'secretKey': 'secret',
-    'maxChecks': 5
+    'maxChecks': 5,
+    'twilio' : {
+        'accountSid': process.env.TWILIO_ACCOUNT_SID || 'AC1f067851db3a2acd71c4a16d3dfedd5d',
+        'authToken': process.env.TWILIO_AUTH_TOKEN || 'b7442ceb53329cec5b52a2d87aef4a1f',
+        'fromPhone': process.env.TWILIO_FROM_PHONE || '+16129992149'
+    }
 };
 
 // production environment
@@ -17,7 +22,12 @@ environments.production = {
     'hostname': '####',
     'name': 'production',
     'secretKey': '####',
-    'maxChecks': 10
+    'maxChecks': 10,
+    'twilio': {
+        'accountSid': process.env.TWILIO_ACCOUNT_SID,
+        'authToken': process.env.TWILIO_AUTH_TOKEN,
+        'fromPhone': process.env.TWILIO_FROM_PHONE
+    }
 };
 
 // get environment name passed as command-line argument
