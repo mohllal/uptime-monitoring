@@ -4,6 +4,7 @@ var twilio = require('./twilio');
 var url = require('url');
 var http = require('http');
 var https = require('https');
+var _logs = require('./logs');
 
 var workers = {};
 
@@ -34,10 +35,14 @@ workers.processCheckOutput = function(check, checkOutput) {
     // decide if an alert is warranted
     var alertWarranted = check.lastChecked && check.state !== state ? true : false;
 
+    // logging to a file
+    var timeOfCheck = Date.now();
+    workers.log(check, checkOutput, state, alertWarranted, timeOfCheck);
+    
     // update the check data
     var newCheckData = check;
     newCheckData.state = state;
-    newCheckData.lastChecked = Date.now();
+    newCheckData.lastChecked = timeOfCheck;
 
     // save the updates
     _data.update('checks', newCheckData.id, newCheckData, function(err){
@@ -187,6 +192,29 @@ workers.init = function() {
 
     // loop the checks so that they will be executed every time interval
     workers.loop();
+};
+
+// log to a file
+workers.log = function(check, checkOutput, state, alertWarranted, timeOfCheck) {
+    // construct the log data
+    var logData = {
+        'check': check,
+        'output': checkOutput,
+        'state': state,
+        'alert': alertWarranted,
+        'time': timeOfCheck
+    };
+
+    // log data to a file with name same as the check id
+    _logs.append(check.id, logData, function (err) {
+        if (!err) {
+            console.log('Logging to file succeeded');
+        }
+        else {
+            console.log('Logging to file failed');
+        }
+    });
+
 };
 
 // export the module
