@@ -117,5 +117,28 @@ lib.delete = function (dir, file, callback) {
     });
 };
 
+// list all files in a given directory
+lib.list = function (dir, callback) {
+    fs.readdir(lib.baseDir + dir + '/', function (err, data) {
+        if (!err && data && data.length > 0) {
+            var trimmedFilesNames = [];
+            
+            // loop through files names and trim each file extension
+            data.forEach(function (fileName) {
+                // ignore .gitkeep file
+                if (fileName != '.gitkeep') {
+                    trimmedFilesNames.push(fileName.replace('.json', ''));
+                }
+            });
+
+            // return the resulted trimmed files names
+            callback(false, trimmedFilesNames);
+        }
+        else {
+            callback(err, data);
+        }
+    });
+};
+
 // export the module
 module.exports = lib;

@@ -1,4 +1,5 @@
 var servers = require('./lib/servers');
+var workers = require('./lib/workers');
 
 var app = {};
 
@@ -6,6 +7,9 @@ var app = {};
 app.init = function () {
     // start the HTTP and HTTPS servers
     servers.init();
+
+    // start the background workers
+    workers.init();
 };
 
 // start the app

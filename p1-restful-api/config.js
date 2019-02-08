@@ -8,6 +8,7 @@ environments.development = {
     'name': 'development',
     'secretKey': process.env.SECRET_KEY || 'secret',
     'maxChecks': process.env.MAXIMUM_CHECKS || 5,
+    'workerInterval': process.env.WORKER_INTERVAL || 1000 * 60,
     'twilio' : {
         'accountSid': process.env.TWILIO_ACCOUNT_SID || 'AC1f067851db3a2acd71c4a16d3dfedd5d',
         'authToken': process.env.TWILIO_AUTH_TOKEN || 'b7442ceb53329cec5b52a2d87aef4a1f',
@@ -23,6 +24,7 @@ environments.production = {
     'name': 'production',
     'secretKey': process.env.SECRET_KEY,
     'maxChecks': process.env.MAXIMUM_CHECKS,
+    'workerInterval': process.env.WORKER_INTERVAL,
     'twilio': {
         'accountSid': process.env.TWILIO_ACCOUNT_SID,
         'authToken': process.env.TWILIO_AUTH_TOKEN,
