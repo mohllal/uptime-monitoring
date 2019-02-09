@@ -14,6 +14,12 @@ environments.development = {
         'accountSid': process.env.TWILIO_ACCOUNT_SID || 'AC1f067851db3a2acd71c4a16d3dfedd5d',
         'authToken': process.env.TWILIO_AUTH_TOKEN || 'b7442ceb53329cec5b52a2d87aef4a1f',
         'fromPhone': process.env.TWILIO_FROM_PHONE || '+16129992149'
+    },
+    'templateGlobals': {
+        'appName': 'Uptime Monitoring',
+        'companyName': 'Uptime Monitoring, Inc',
+        'yearCreated': '2018',
+        'baseUrl': 'http://' + this.hostname + ':' + this.httpPort
     }
 };
 
@@ -31,6 +37,12 @@ environments.production = {
         'accountSid': process.env.TWILIO_ACCOUNT_SID,
         'authToken': process.env.TWILIO_AUTH_TOKEN,
         'fromPhone': process.env.TWILIO_FROM_PHONE
+    },
+    'templateGlobals': {
+        'appName': 'Uptime Monitoring',
+        'companyName': 'Uptime Monitoring, Inc',
+        'yearCreated': '2018',
+        'baseUrl': 'http://' + this.hostname + ':' + this.httpPort
     }
 };
 
