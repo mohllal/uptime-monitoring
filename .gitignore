@@ -3,3 +3,4 @@
 
 # logs folder
 **/.logs/*.log
+**/.logs/*.gz.b64

@@ -192,6 +192,12 @@ workers.init = function() {
 
     // loop the checks so that they will be executed every time interval
     workers.loop();
+
+    // compress log files immediately
+    workers.compressLogs();
+
+    // loop the compress process so that it will be executed every time interval
+    workers.compressLogsLoop();
 };
 
 // log to a file
@@ -215,6 +221,47 @@ workers.log = function(check, checkOutput, state, alertWarranted, timeOfCheck) {
         }
     });
 
+};
+
+// compress the log files
+workers.compressLogs = function() {
+    // list all log files (non-compressed ones)
+    _logs.list(false, function (err, data) {
+        if (!err && data && data.length > 0) {
+            data.forEach(function(log){
+                // compress the data to a different file
+                var logId = log.replace('.log','');
+                var newFileId = logId + '-' + Date.now();
+                
+                _logs.compress(logId, newFileId, function(err){
+                    if(!err){
+                        // truncate the log
+                        _logs.truncate(logId, function(err){
+                            if(!err){
+                                console.log("Success truncating log file");
+                            } 
+                            else {
+                                console.log("Error truncating log file");
+                            }
+                        });
+                    } 
+                    else {
+                        console.log("Error compressing one of the log files.",err);
+                    }
+                });
+            });
+        }
+        else {
+            console.log('Error: could not find any logs to compress');
+        }
+    });
+};
+
+// timer to execute the compress process once per time interval
+workers.compressLogsLoop = function() {
+    setInterval(function() {
+        workers.compressLogs();
+    }, config.compressLogsInterval);
 };
 
 // export the module
