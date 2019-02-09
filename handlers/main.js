@@ -1,11 +1,18 @@
-var usersHandler = require('./users');
-var authHandler = require('./auth');
-var checksHandler = require('./checks');
+var usersHandler = require('./api/users');
+var authHandler = require('./api/auth');
+var checksHandler = require('./api/checks');
+var pingHandler = require('./api/ping');
+
+var indexHandler = require('./gui/index');
 
 //define request handlers
 var handlers = {};
 
-// users handler
+/*
+* JSON API handlers
+*/
+
+// users API handler
 handlers.users = function (data, callback) {
     var acceptableMethods = ['GET', 'POST', 'PUT', 'DELETE'];
     if (acceptableMethods.indexOf(data.method) > -1) {
@@ -16,7 +23,7 @@ handlers.users = function (data, callback) {
     }
 };
 
-// auth handler
+// auth API handler
 handlers.auth = function (data, callback) {
     var acceptableMethods = ['GET', 'POST', 'PUT', 'DELETE'];
     if (acceptableMethods.indexOf(data.method) > -1) {
@@ -27,7 +34,7 @@ handlers.auth = function (data, callback) {
     }
 };
 
-// checks handler
+// checks API handler
 handlers.checks = function (data, callback) {
     var acceptableMethods = ['GET', 'POST', 'PUT', 'DELETE'];
     if (acceptableMethods.indexOf(data.method) > -1) {
@@ -38,10 +45,17 @@ handlers.checks = function (data, callback) {
     }
 };
 
-// ping handler
-handlers.ping = function (data, callback) {
-    callback(200);
-};
+// ping API handler
+handlers.ping = pingHandler.ping;
+
+
+/*
+* HTML GUI handlers
+*/
+
+// index GUI handler
+handlers.index = indexHandler.index;
+
 
 // 404 handler
 handlers.notFound = function (data, callback) {

@@ -1,5 +1,5 @@
-var _data = require('../lib/data');
-var helpers = require('../lib/helpers');
+var _data = require('../../lib/data');
+var helpers = require('../../lib/helpers');
 var authHandler = require('./auth');
 
 // container for the users sub-handlers
