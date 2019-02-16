@@ -11,38 +11,24 @@
     <title>{head.title} | {global.appName}</title>
     <meta name="description" content="{head.description}">
 
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
     <!-- Static assets -->
     <link type="image/x-icon" rel="icon" href="favicon.ico">
     <script type="text/javascript" charset="utf-8" src="public/app.js"></script>
     <link rel="stylesheet" type="text/css" href="public/app.css" />
-
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <style>
-        body {
-            padding-top: 5rem;
-        }
-        main > .container {
-            padding: 60px 15px 0;
-        }
-        .content {
-            padding: 3rem 1.5rem;
-            text-align: center;
-        }
-        .footer {
-            background-color: #f5f5f5;
-        }  
-        .footer > .container {
-            padding-right: 15px;
-            padding-left: 15px;
-        }
+        
     </style>
 </head>
 
 <body class="d-flex flex-column h-100">
     <header>
         <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-            <a class="navbar-brand" href="#">Uptime Monitoring</a>
+            <a class="navbar-brand logo" href="/">
+                <img src="public/logo.png" alt="Logo" height="30px"/>
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
                 aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

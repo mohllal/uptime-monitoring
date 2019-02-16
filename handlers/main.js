@@ -4,6 +4,7 @@ var checksHandler = require('./api/checks');
 var pingHandler = require('./api/ping');
 
 var indexHandler = require('./gui/index');
+var staticHandler = require('./gui/static');
 
 //define request handlers
 var handlers = {};
@@ -56,6 +57,11 @@ handlers.ping = pingHandler.ping;
 // index GUI handler
 handlers.index = indexHandler.index;
 
+// favicon handler
+handlers.favicon = staticHandler.favicon;
+
+// public handler
+handlers.public = staticHandler.public;
 
 // 404 handler
 handlers.notFound = function (data, callback) {
