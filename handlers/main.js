@@ -68,8 +68,10 @@ handlers.public = staticHandler.public;
 // accountCreate handler
 handlers.accountCreate = accountHandler.accountCreate;
 
-// accountCreate handler
+// sessionCreate handler
 handlers.sessionCreate = sessionHandler.sessionCreate;
+// sessionDelete handler
+handlers.sessionDelete = sessionHandler.sessionDelete;
 
 // 404 handler
 handlers.notFound = function (data, callback) {
