@@ -10,7 +10,7 @@ indexHandler.index = function(data, callback) {
         var templateData = {
             'head.title' : 'Home',
             'head.description' : 'A Node.js web application that allows users to enter URLs they want monitored and receive SMS alerts when those websites go down or come back up.',
-            'body.title': 'Hello, stranger!'
+            'body.class' : 'index'
         };
 
         // read in a template as a string
