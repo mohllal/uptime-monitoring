@@ -6,6 +6,7 @@ var pingHandler = require('./api/ping');
 var indexHandler = require('./gui/index');
 var staticHandler = require('./gui/static');
 var accountHandler = require('./gui/account');
+var sessionHandler = require('./gui/session');
 
 //define request handlers
 var handlers = {};
@@ -66,6 +67,9 @@ handlers.public = staticHandler.public;
 
 // accountCreate handler
 handlers.accountCreate = accountHandler.accountCreate;
+
+// accountCreate handler
+handlers.sessionCreate = sessionHandler.sessionCreate;
 
 // 404 handler
 handlers.notFound = function (data, callback) {
