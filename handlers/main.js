@@ -67,6 +67,8 @@ handlers.public = staticHandler.public;
 
 // accountCreate handler
 handlers.accountCreate = accountHandler.accountCreate;
+// accountEdit handler
+handlers.accountEdit = accountHandler.accountEdit;
 
 // sessionCreate handler
 handlers.sessionCreate = sessionHandler.sessionCreate;
