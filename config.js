@@ -19,7 +19,7 @@ environments.development = {
         'appName': 'Uptime Monitoring',
         'companyName': 'Uptime Monitoring, Inc',
         'yearCreated': '2018',
-        'baseUrl': 'http://' + this.hostname + ':' + this.httpPort
+        'baseUrl': 'http://localhost:3000/'
     }
 };
 
@@ -42,7 +42,7 @@ environments.production = {
         'appName': 'Uptime Monitoring',
         'companyName': 'Uptime Monitoring, Inc',
         'yearCreated': '2018',
-        'baseUrl': 'http://' + this.hostname + ':' + this.httpPort
+        'baseUrl': 'http://localhost:3000/'
     }
 };
 
